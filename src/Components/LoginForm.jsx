@@ -1,12 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Form.module.css";
 
 const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate(); // Adicionando o useNavigate
 
-  const handleSubmit = (e) => {
-
-    // Nesse handlesubmit você deverá usar o preventDefault,
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const login = e.target.elements.login.value.trim();
@@ -24,13 +24,37 @@ const LoginForm = () => {
       return;
     }
 
-    // enviar os dados do formulário e enviá-los no corpo da requisição 
-    // para a rota da api que faz o login /auth
-    // lembre-se que essa rota vai retornar um Bearer Token e o mesmo deve ser salvo
-    // no localstorage para ser usado em chamadas futuras
-    // Com tudo ocorrendo corretamente, o usuário deve ser redirecionado a página principal,com react-router (/home)
-    // Lembre-se de usar um alerta para dizer se foi bem sucedido ou ocorreu um erro
+    try {
+      // Enviar os dados do formulário para a rota da API que faz o login (/auth)
+      const response = await fetch("https://dhodonto.ctdprojetointegrador.com/auth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: login,
+          password: password,
+        }),
+      });
 
+      if (response.ok) {
+        const data = await response.json();
+        const token = data.token;
+        const tipo = data.tipo;
+
+        // Salvar o token no localStorage usando a Context API
+        localStorage.setItem("token", token);
+        //localStorage.setItem("Tipo", tipo);
+
+        // Redirecionar o usuário para a página Home (/home)
+        navigate("/home"); // Utilizando o navigate para redirecionar
+
+      } else {
+        setErrorMessage("Ocorreu um erro ao fazer o login. Verifique suas informações novamente.");
+      }
+    } catch (error) {
+      setErrorMessage("Ocorreu um erro ao fazer o login. Por favor, tente novamente mais tarde.");
+    }
   };
 
   return (
