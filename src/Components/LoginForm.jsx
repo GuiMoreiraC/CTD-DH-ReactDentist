@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
+
 import styles from "./Form.module.css";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+  
+  const { setToken } = useContext(AuthContext);
+  
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate(); // Adicionando o useNavigate
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -39,15 +44,13 @@ const LoginForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        const token = data.token;
-        const tipo = data.tipo;
 
         // Salvar o token no localStorage usando a Context API
-        localStorage.setItem("token", token);
-        //localStorage.setItem("Tipo", tipo);
+        setToken(data.token);
+        //localStorage.setItem("token", data.token);
 
         // Redirecionar o usuário para a página Home (/home)
-        navigate("/home"); // Utilizando o navigate para redirecionar
+        navigate("/home");
 
       } else {
         setErrorMessage("Ocorreu um erro ao fazer o login. Verifique suas informações novamente.");
