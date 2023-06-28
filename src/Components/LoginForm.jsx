@@ -47,6 +47,7 @@ const LoginForm = () => {
 
         // Salvar o token no localStorage usando a Context API
         setToken(data.token);
+       
         //localStorage.setItem("token", data.token);
 
         // Redirecionar o usuário para a página Home (/home)
