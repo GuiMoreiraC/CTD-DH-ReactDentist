@@ -2,8 +2,9 @@ import styles from "./Card.module.css";
 import { Link } from "react-router-dom";
 
 
-const Card = ({name,matricula}) => {
 
+const Card = ({name,matricula}) => {
+  
   return (
     <>
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação

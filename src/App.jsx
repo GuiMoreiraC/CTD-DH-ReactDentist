@@ -2,6 +2,7 @@
 import { Outlet } from "react-router-dom";
 import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
+import { ApiDataProvider } from "./Components/ApiDataContext";
 
 function App() {
   return (
@@ -11,7 +12,9 @@ function App() {
       <div className={`app light}`}>
         <Navbar />
         <main>
-          <Outlet />
+          <ApiDataProvider>
+            <Outlet />
+          </ApiDataProvider>
         </main>
         <Footer />
       </div>

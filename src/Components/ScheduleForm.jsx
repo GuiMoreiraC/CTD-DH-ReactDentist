@@ -1,13 +1,21 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./ScheduleForm.module.css";
+import { ApiDataContext } from "../Components/ApiDataContext";
+
 
 const ScheduleForm = () => {
+  const apiData = useContext(ApiDataContext); //busca dados do contexto da API
+  const dentistList = apiData.dentistList; //define a variavel dentisList com a lista de dentistas obtida na consulta
+  const pacientList = apiData.pacientList; //define a variavel pacientList com a lista de pacientes obtida na consulta
   useEffect(() => {
     //Nesse useEffect, você vai fazer um fetch na api buscando TODOS os dentistas
     //e pacientes e carregar os dados em 2 estados diferentes
   }, []);
 
   const handleSubmit = (event) => {
+    event.preventDefault();
+
+
     //Nesse handlesubmit você deverá usar o preventDefault,
     //obter os dados do formulário e enviá-los no corpo da requisição 
     //para a rota da api que marca a consulta
@@ -31,9 +39,14 @@ const ScheduleForm = () => {
               </label>
               <select className="form-select" name="dentist" id="dentist">
                 {/*Aqui deve ser feito um map para listar todos os dentistas*/}
-                <option key={'Matricula do dentista'} value={'Matricula do dentista'}>
-                  {`Nome Sobrenome`}
-                </option>
+                {dentistList && dentistList.map((dentist) => {
+                  return (
+                    <option key={dentist.matricula} value={dentist.matricula}>
+                      {dentist.nome+" "+dentist.sobrenome}
+                    </option>
+                  )
+                })}
+
               </select>
             </div>
             <div className="col-sm-12 col-lg-6">
@@ -42,9 +55,13 @@ const ScheduleForm = () => {
               </label>
               <select className="form-select" name="patient" id="patient">
                 {/*Aqui deve ser feito um map para listar todos os pacientes*/}
-                <option key={'Matricula do paciente'} value={'Matricula do paciente'}>
-                  {`Nome Sobrenome`}
-                </option>
+                {pacientList && pacientList.map((pacient) => {
+                  return (
+                    <option key={pacient.matricula} value={pacient.matricula}>
+                      {pacient.nome+" "+pacient.sobrenome}
+                    </option>
+                  )
+                })}
               </select>
             </div>
           </div>
