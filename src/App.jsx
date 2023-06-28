@@ -1,8 +1,8 @@
-
 import { Outlet } from "react-router-dom";
 import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
 import { ApiDataProvider } from "./Components/ApiDataContext";
+import { AuthProvider } from "./Context/AuthContext"; // Importe o AuthProvider
 
 function App() {
   return (
@@ -12,9 +12,11 @@ function App() {
       <div className={`app light}`}>
         <Navbar />
         <main>
-          <ApiDataProvider>
-            <Outlet />
-          </ApiDataProvider>
+          <AuthProvider> {/* Envolve o Outlet com o AuthProvider */}
+            <ApiDataProvider>
+              <Outlet />
+            </ApiDataProvider>
+          </AuthProvider>
         </main>
         <Footer />
       </div>
