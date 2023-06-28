@@ -1,20 +1,29 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./ScheduleForm.module.css";
 import { ApiDataContext } from "../Components/ApiDataContext";
-
+import axios from "axios";
 
 const ScheduleForm = () => {
   const apiData = useContext(ApiDataContext); //busca dados do contexto da API
   const dentistList = apiData.dentistList; //define a variavel dentisList com a lista de dentistas obtida na consulta
   const pacientList = apiData.pacientList; //define a variavel pacientList com a lista de pacientes obtida na consulta
-  useEffect(() => {
-    //Nesse useEffect, você vai fazer um fetch na api buscando TODOS os dentistas
-    //e pacientes e carregar os dados em 2 estados diferentes
-  }, []);
+ 
 
-  const handleSubmit = (event) => {
+  const [pacient,setPacient] = useState("");
+  const [dentist,setDentist] = useState("");
+
+  const handleChangeSelectDentist{
+    
+  }
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(event.target.value);
+    try{
 
+        const response = await axios.post("https://dhodonto.ctdprojetointegrador.com/consulta",);
+    }catch(e){
+      console.log(e);
+    }
 
     //Nesse handlesubmit você deverá usar o preventDefault,
     //obter os dados do formulário e enviá-los no corpo da requisição 
@@ -37,7 +46,7 @@ const ScheduleForm = () => {
               <label htmlFor="dentist" className="form-label">
                 Dentist
               </label>
-              <select className="form-select" name="dentist" id="dentist">
+              <select className="form-select" name="dentist" id="dentist" onChange={handleChangeSelectDentist}>
                 {/*Aqui deve ser feito um map para listar todos os dentistas*/}
                 {dentistList && dentistList.map((dentist) => {
                   return (
@@ -53,7 +62,7 @@ const ScheduleForm = () => {
               <label htmlFor="patient" className="form-label">
                 Patient
               </label>
-              <select className="form-select" name="patient" id="patient">
+              <select className="form-select" name="patient" id="patient" onChange={handleChangeSelectPacient}>
                 {/*Aqui deve ser feito um map para listar todos os pacientes*/}
                 {pacientList && pacientList.map((pacient) => {
                   return (

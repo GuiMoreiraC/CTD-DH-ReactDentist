@@ -16,8 +16,6 @@ const Card = ({name,matricula}) => {
           alt="doctor placeholder"
         />
         <div className={`card-body ${styles.CardBody}`}>
-          {/* Na linha seguinte o link deverá utilizar a matricula, nome e sobrenome do dentista
-          que vem da API */}
           <Link to={`/dentist/${matricula}`}>
             <h5 className={`card-title ${styles.title}`}>{name}</h5>
           </Link>
