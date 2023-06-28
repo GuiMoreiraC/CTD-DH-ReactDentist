@@ -23,6 +23,12 @@ const LoginForm = () => {
       navigate("/home");
 
     }
+
+    // Mostra erro de login
+    if (error) {
+      error.response.status == 400 ? setErrorMessage("1") : setErrorMessage("2");
+    }
+
   }, [data, error, navigate]);
   
   const handleSubmit = async (e) => {
@@ -42,7 +48,7 @@ const LoginForm = () => {
     /// Validações
     // Verificar se todos os campos obrigatórios foram preenchidos
     if (!login || !password) {
-      setErrorMessage("Verifique suas informações novamente");
+      !login ? setErrorMessage("O campo de login é obrigatório") : setErrorMessage("O campo de Senha é obrigatório");
       return;
     }
 
@@ -52,37 +58,6 @@ const LoginForm = () => {
       return;
     }
 
-    if (error){
-      console.log(error);
-    }
-
-    // try {
-    //   const response = await fetch("https://dhodonto.ctdprojetointegrador.com/auth", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       username: login,
-    //       password: password,
-    //     }),
-    //   });
-
-    //   if (response.ok) {
-    //     const data = await response.json();
-
-    //     // Salvar o token no localStorage usando a Context API
-    //     setToken(data.token);
-
-    //     // Redirecionar o usuário para a página Home (/home)
-    //     navigate("/home");
-
-    //   } else {
-    //     setErrorMessage("Ocorreu um erro ao fazer o login. Verifique suas informações novamente.");
-    //   }
-    // } catch (error) {
-    //   setErrorMessage("Ocorreu um erro ao fazer o login. Por favor, tente novamente mais tarde.");
-    // }
   };
 
   return (
