@@ -1,15 +1,29 @@
-import { useContext, useState } from "react";
+import styles from "./Form.module.css";
+
+import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 
-import styles from "./Form.module.css";
+import useApi from "../Hooks/useApi";
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  
   const { setToken } = useContext(AuthContext);
-  
   const [errorMessage, setErrorMessage] = useState("");
+  const { data, isLoading, error, shouldFetch } = useApi();
+
+  useEffect(() => {
+
+    if (data && !error) {
+
+      // Salvar o token no usando a Context API
+      setToken(data.token);
+
+      /// Redirecionamos o usuário para a Home
+      navigate("/home");
+
+    }
+  }, [data, error, navigate]);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +31,15 @@ const LoginForm = () => {
     const login = e.target.elements.login.value.trim();
     const password = e.target.elements.password.value.trim();
 
+    // Enviar os dados do formulário para a rota da API que faz o login (/auth)
+    const dataToPost = {
+      username: login,
+      password: password,
+    };
+
+    await shouldFetch("auth", dataToPost);
+
+    /// Validações
     // Verificar se todos os campos obrigatórios foram preenchidos
     if (!login || !password) {
       setErrorMessage("Verifique suas informações novamente");
@@ -29,35 +52,37 @@ const LoginForm = () => {
       return;
     }
 
-    try {
-      // Enviar os dados do formulário para a rota da API que faz o login (/auth)
-      const response = await fetch("https://dhodonto.ctdprojetointegrador.com/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: login,
-          password: password,
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-
-        // Salvar o token no localStorage usando a Context API
-        setToken(data.token);
-        //localStorage.setItem("token", data.token);
-
-        // Redirecionar o usuário para a página Home (/home)
-        navigate("/home");
-
-      } else {
-        setErrorMessage("Ocorreu um erro ao fazer o login. Verifique suas informações novamente.");
-      }
-    } catch (error) {
-      setErrorMessage("Ocorreu um erro ao fazer o login. Por favor, tente novamente mais tarde.");
+    if (error){
+      console.log(error);
     }
+
+    // try {
+    //   const response = await fetch("https://dhodonto.ctdprojetointegrador.com/auth", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       username: login,
+    //       password: password,
+    //     }),
+    //   });
+
+    //   if (response.ok) {
+    //     const data = await response.json();
+
+    //     // Salvar o token no localStorage usando a Context API
+    //     setToken(data.token);
+
+    //     // Redirecionar o usuário para a página Home (/home)
+    //     navigate("/home");
+
+    //   } else {
+    //     setErrorMessage("Ocorreu um erro ao fazer o login. Verifique suas informações novamente.");
+    //   }
+    // } catch (error) {
+    //   setErrorMessage("Ocorreu um erro ao fazer o login. Por favor, tente novamente mais tarde.");
+    // }
   };
 
   return (
