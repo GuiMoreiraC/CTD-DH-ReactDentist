@@ -10,12 +10,10 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const { setToken } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState("");
-  const { data, isLoading, error, shouldFetch } = useApi();
+  const { data, error, shouldFetch } = useApi();
 
   useEffect(() => {
-
     if (data && !error) {
-
       // Salvar o token no usando a Context API
       setToken(data.token);
 
@@ -24,9 +22,12 @@ const LoginForm = () => {
 
     }
 
-    // Mostra erro de login
+    // Mostrar erro de login
     if (error) {
-      error.response.status == 400 ? setErrorMessage("1") : setErrorMessage("2");
+      error.response.status == 400 
+        ? setErrorMessage("Credenciais inválidas")
+        : setErrorMessage("Ocorreu um erro. Tente novamente mais tarde.");
+
     }
 
   }, [data, error, navigate]);
@@ -37,26 +38,31 @@ const LoginForm = () => {
     const login = e.target.elements.login.value.trim();
     const password = e.target.elements.password.value.trim();
 
-    // Enviar os dados do formulário para a rota da API que faz o login (/auth)
-    const dataToPost = {
-      username: login,
-      password: password,
-    };
-
-    await shouldFetch("auth", dataToPost);
-
     /// Validações
     // Verificar se todos os campos obrigatórios foram preenchidos
     if (!login || !password) {
-      !login ? setErrorMessage("O campo de login é obrigatório") : setErrorMessage("O campo de Senha é obrigatório");
+      !login
+        ? setErrorMessage("O campo de login é obrigatório")
+        : setErrorMessage("O campo de Senha é obrigatório");
       return;
+
     }
 
     // Validar comprimento do campo de login
-    if (login.length <= 5) {
-      setErrorMessage("O campo de login deve ter comprimento maior que 5");
+    if (login.length <= 5 || password.length <=7) {
+      login.length <= 5
+        ? setErrorMessage("O campo de login deve ter comprimento maior que 5")
+        : setErrorMessage("O campo de Senha deve ter no minimo 8 caracteres");
       return;
+
     }
+
+    // Enviar os dados do formulário para a rota da API que faz o login (/auth)
+    await shouldFetch("auth", {
+      username: login,
+      password: password,
+
+    });
 
   };
 
@@ -64,7 +70,7 @@ const LoginForm = () => {
     <>
       <div className={`text-center card container ${styles.card}`}>
         <div className={`card-body ${styles.CardBody}`}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate>
             <input
               className={`form-control ${styles.inputSpacing}`}
               placeholder="Login"
@@ -90,7 +96,9 @@ const LoginForm = () => {
         </div>
       </div>
     </>
+
   );
+
 };
 
 export default LoginForm;
