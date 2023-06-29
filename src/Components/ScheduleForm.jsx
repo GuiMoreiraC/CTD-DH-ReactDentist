@@ -1,13 +1,64 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./ScheduleForm.module.css";
+import { ApiDataContext } from "../Context/ApiDataContext";
+import axios from "axios";
+
+import { AuthContext } from "../Context/AuthContext";
 
 const ScheduleForm = () => {
-  useEffect(() => {
-    //Nesse useEffect, você vai fazer um fetch na api buscando TODOS os dentistas
-    //e pacientes e carregar os dados em 2 estados diferentes
-  }, []);
+  const apiData = useContext(ApiDataContext); //busca dados do contexto da API
+  const dentistList = apiData.dentistList; //define a variavel dentisList com a lista de dentistas obtida na consulta
+  const pacientList = apiData.pacientList; //define a variavel pacientList com a lista de pacientes obtida na consulta
 
-  const handleSubmit = (event) => {
+  const [appointmentDate, setAppointmentDate] = useState("");
+
+  const [pacient, setPacient] = useState("");
+  const [dentist, setDentist] = useState("");
+
+  const {token} = useContext(AuthContext);
+  
+
+  function handleChangeSelectDentist(event) {
+    setDentist(event.target.value); //define o valor do estado com a matricula do dentista selecionado no select
+  }
+  function handleChangeSelectPacient(event) {
+    setPacient(event.target.value); //define o valor do estado com a matricula do paciente selecionado no select
+  }
+  function handleDateSelect(event) {
+    const selectedDate = event.target.value;
+    if(selectedDate!==""){
+    setAppointmentDate(selectedDate);}
+  }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+
+      const response = await axios.post(
+        "https://dhodonto.ctdprojetointegrador.com/consulta",
+        {
+          paciente: {
+            matricula: pacient
+          },
+          dentista: {
+            matricula: dentist
+          },
+          dataHoraAgendamento: appointmentDate
+        },
+        {
+          headers: {
+             Authorization: `Bearer ${token}`
+          }
+        }
+        
+      );
+      console.log(response);
+    } catch (e) {
+      console.log(e);
+    }
+    console.log(token);
+    // console.log(dentist);
+    // console.log(pacient);
+    // console.log(appointmentDate);
     //Nesse handlesubmit você deverá usar o preventDefault,
     //obter os dados do formulário e enviá-los no corpo da requisição 
     //para a rota da api que marca a consulta
@@ -29,22 +80,31 @@ const ScheduleForm = () => {
               <label htmlFor="dentist" className="form-label">
                 Dentist
               </label>
-              <select className="form-select" name="dentist" id="dentist">
+              <select className="form-select" name="dentist" id="dentist" onChange={handleChangeSelectDentist}>
                 {/*Aqui deve ser feito um map para listar todos os dentistas*/}
-                <option key={'Matricula do dentista'} value={'Matricula do dentista'}>
-                  {`Nome Sobrenome`}
-                </option>
+                {dentistList && dentistList.map((dentist) => {
+                  return (
+                    <option key={dentist.matricula} value={dentist.matricula}>
+                      {dentist.nome + " " + dentist.sobrenome}
+                    </option>
+                  )
+                })}
+
               </select>
             </div>
             <div className="col-sm-12 col-lg-6">
               <label htmlFor="patient" className="form-label">
                 Patient
               </label>
-              <select className="form-select" name="patient" id="patient">
+              <select className="form-select" name="patient" id="patient" onChange={handleChangeSelectPacient}>
                 {/*Aqui deve ser feito um map para listar todos os pacientes*/}
-                <option key={'Matricula do paciente'} value={'Matricula do paciente'}>
-                  {`Nome Sobrenome`}
-                </option>
+                {pacientList && pacientList.map((pacient) => {
+                  return (
+                    <option key={pacient.matricula} value={pacient.matricula}>
+                      {pacient.nome + " " + pacient.sobrenome}
+                    </option>
+                  )
+                })}
               </select>
             </div>
           </div>
@@ -58,6 +118,8 @@ const ScheduleForm = () => {
                 id="appointmentDate"
                 name="appointmentDate"
                 type="datetime-local"
+                value={appointmentDate}
+                onChange={handleDateSelect}
               />
             </div>
           </div>

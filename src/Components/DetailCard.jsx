@@ -19,7 +19,6 @@ const DetailCard = () => {
   }, []);
   async function getdDentist(id){
     const response = await axios.get(`https://dhodonto.ctdprojetointegrador.com/dentista?matricula=${dentistID}`)
-    console.log(response.data);
     setDentist(response.data);
     setUsername(response.data.usuario.username);
 }

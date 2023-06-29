@@ -3,6 +3,8 @@ import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
 import { useContext, useEffect } from "react";
 import { ThemeContext } from "./Context/ThemeContext";
+import { ApiDataProvider } from "./Context/ApiDataContext";
+import { AuthProvider } from "./Context/AuthContext"; // Importe o AuthProvider
 
 function App() {
 
@@ -21,10 +23,16 @@ function App() {
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
       // está em dark mode e deverá utilizar a classe dark ou light */}
       <div className={`app light}`}>
-        <Navbar />
-        <main>
-          <Outlet />
-        </main>
+        <AuthProvider>
+          <Navbar />
+          <main>
+            {/* Envolve o Outlet com o AuthProvider */}
+            <ApiDataProvider>
+              <Outlet />
+            </ApiDataProvider>
+
+          </main>
+        </AuthProvider>
         <Footer />
       </div>
     </>

@@ -1,6 +1,10 @@
 import styles from "./Navbar.module.css";
+import { useContext } from "react";
+import { AuthContext } from "../Context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const { token, clearToken, setToken } = useContext(AuthContext);
 
   return (
     <header className="sticky-top">
@@ -45,9 +49,17 @@ const Navbar = () => {
                 ao formulário de login
                 O botão de logout deverá ser testado darkmode
                 se sim, btn-dark, se não, btn-light */}
-                <a className="nav-link" href="/login">
-                  Login
-                </a>
+                {token !== null ? (
+                  <button
+                    className={`btn ${styles.darkModeButton}`}
+                    onClick={clearToken}
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <Link to="/login">Login</Link>
+                 
+                )}
               </li>
               <li className={`nav-item`}>
                 {/* Ao ser clicado, esse botão mudará a aplicação para dark mode ou light mode.
