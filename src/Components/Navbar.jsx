@@ -1,11 +1,12 @@
 import styles from "./Navbar.module.css";
 import { useContext } from "react";
-import { AuthContext } from "../Context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import { GlobalContext } from "../Context/GlobalContext";
 
 const Navbar = () => {
-  const { token, clearToken, setToken } = useContext(AuthContext);
-
+  const { token, clearToken, setToken } = useContext(GlobalContext);
+  const tokenStorage = localStorage.getItem("token");
+  const navigate = useNavigate();
   return (
     <header className="sticky-top">
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
@@ -38,9 +39,7 @@ const Navbar = () => {
             <ul className="navbar-nav mb-2 mb-sm-0">
               <li className={`nav-item ${styles.navBarLink}`}>
                 {/* Ao clicar, o usuário deve ser redirecionado a home, com react-router */}
-                <a className="nav-link" href="/home">
-                  Home
-                </a>
+                <Link to="/home">Home</Link>
               </li>
               <li className={`nav-item ${styles.navBarLink}`}>
                 {/* Se o usuário estiver logado, deverá aparecer um botão de logout
@@ -49,16 +48,20 @@ const Navbar = () => {
                 ao formulário de login
                 O botão de logout deverá ser testado darkmode
                 se sim, btn-dark, se não, btn-light */}
-                {token !== null ? (
+                {tokenStorage !== null ? (
                   <button
                     className={`btn ${styles.darkModeButton}`}
-                    onClick={clearToken}
+                    onClick={() => {
+                      clearToken();
+                      localStorage.removeItem("token");
+                      navigate("/home");
+                    }}
                   >
                     Logout
                   </button>
                 ) : (
                   <Link to="/login">Login</Link>
-                 
+
                 )}
               </li>
               <li className={`nav-item`}>

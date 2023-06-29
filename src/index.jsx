@@ -7,7 +7,7 @@ import Detail from "./Routes/Detail";
 import App from "./App"
 import "./index.css";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-import { ThemeProvider } from "./Context/ThemeContext";
+//import { ThemeProvider } from "./Context/ThemeContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -30,7 +30,7 @@ const router = createBrowserRouter ([
 ])
 
 root.render(
-          <ThemeProvider>
+          //<ThemeProvider>
             <RouterProvider router={router}/>
-          </ThemeProvider>
+          //</ThemeProvider>
 );

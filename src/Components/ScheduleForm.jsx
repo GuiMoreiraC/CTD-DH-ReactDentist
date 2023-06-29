@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./ScheduleForm.module.css";
-import { ApiDataContext } from "../Context/ApiDataContext";
 import axios from "axios";
 
-import { AuthContext } from "../Context/AuthContext";
+import { GlobalContext } from "../Context/GlobalContext";
 
 const ScheduleForm = () => {
-  const apiData = useContext(ApiDataContext); //busca dados do contexto da API
+  const {apiData,token} = useContext(GlobalContext); //busca dados do contexto da API
   const dentistList = apiData.dentistList; //define a variavel dentisList com a lista de dentistas obtida na consulta
   const pacientList = apiData.pacientList; //define a variavel pacientList com a lista de pacientes obtida na consulta
 
@@ -15,7 +14,6 @@ const ScheduleForm = () => {
   const [pacient, setPacient] = useState("");
   const [dentist, setDentist] = useState("");
 
-  const {token} = useContext(AuthContext);
   
 
   function handleChangeSelectDentist(event) {
@@ -55,10 +53,7 @@ const ScheduleForm = () => {
     } catch (e) {
       console.log(e);
     }
-    console.log(token);
-    // console.log(dentist);
-    // console.log(pacient);
-    // console.log(appointmentDate);
+    
     //Nesse handlesubmit você deverá usar o preventDefault,
     //obter os dados do formulário e enviá-los no corpo da requisição 
     //para a rota da api que marca a consulta

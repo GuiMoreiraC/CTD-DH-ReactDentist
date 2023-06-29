@@ -1,9 +1,8 @@
-import { useEffect,useState } from "react";
+import { useEffect,useState,useContext } from "react";
 import ScheduleFormModal from "./ScheduleFormModal";
 import styles from "./DetailCard.module.css";
 import axios from "axios";
 import { useParams,useNavigate } from 'react-router-dom';
-
 
 
 const DetailCard = () => {
@@ -12,6 +11,7 @@ const DetailCard = () => {
   const params = useParams();
   const dentistID = params.id;
 
+  const token =localStorage.getItem("token");
   useEffect(() => {
     //Nesse useEffect, você vai fazer um fetch na api passando o 
     //id do dentista que está vindo do react-router e carregar os dados em algum estado
@@ -53,14 +53,17 @@ const DetailCard = () => {
             <div className="text-center">
               {/* //Na linha seguinte deverá ser feito um teste se a aplicação
               // está em dark mode e deverá utilizado o css correto */}
-              <button
+              {<button
                 data-bs-toggle="modal"
+                disabled={token!==null?false:true}
                 data-bs-target="#exampleModal"
                 className={`btn btn-light ${styles.button
                   }`}
               >
                 Marcar consulta
               </button>
+              }
+              
             </div>
           </div>
         </div>

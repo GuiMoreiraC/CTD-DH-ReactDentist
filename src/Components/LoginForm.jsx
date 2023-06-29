@@ -2,13 +2,13 @@ import styles from "./Form.module.css";
 
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../Context/AuthContext";
+import { GlobalContext } from "../Context/GlobalContext";
 
 import useApi from "../Hooks/useApi";
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const { setToken } = useContext(AuthContext);
+  const { setToken } = useContext(GlobalContext);
   const [errorMessage, setErrorMessage] = useState("");
   const { data, error, shouldFetch } = useApi();
 
@@ -16,6 +16,7 @@ const LoginForm = () => {
     if (data && !error) {
       // Salvar o token no usando a Context API
       setToken(data.token);
+      localStorage.setItem("token",data.token);
       alert("LOgou com sucess@@")
       /// Redirecionamos o usuário para a Home
       navigate("/home");

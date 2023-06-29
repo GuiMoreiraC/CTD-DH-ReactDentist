@@ -1,10 +1,9 @@
 import { useContext } from "react";
 import Card from "../Components/Card";
-import { ApiDataContext } from "../Context/ApiDataContext";
-
+import { GlobalContext } from "../Context/GlobalContext";
 const Home = () => {
 
-  const apiData = useContext(ApiDataContext); //busca dados do contexto da API
+  const {apiData} = useContext(GlobalContext); //busca dados do contexto da API
   const dentistList = apiData.dentistList; //define a variavel dentisList com a lista de dentistas obtida na consulta
  
   return (
