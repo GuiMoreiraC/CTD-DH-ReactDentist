@@ -22,10 +22,12 @@ const AuthProvider = ({ children }) => {
 
   const setToken = (token) => {
     dispatch({ type: 'SET_TOKEN', payload: token });
+    localStorage.setItem('token', token);
   };
 
   const clearToken = () => {
     dispatch({ type: 'CLEAR_TOKEN' });
+    localStorage.removeItem('token');
   };
 
   return (
