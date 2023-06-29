@@ -17,7 +17,6 @@ function App() {
             <ApiDataProvider>
               <Outlet />
             </ApiDataProvider>
-
           </main>
         </AuthProvider>
         <Footer />
