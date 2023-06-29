@@ -1,17 +1,19 @@
 import styles from "./Navbar.module.css";
-import { useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { ThemeContext } from "../Context/ThemeContext";
 
 const Navbar = () => {
   const { token, clearToken, setToken } = useContext(AuthContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <header className="sticky-top">
+    <header className="sticky-top ">
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar navbar-dark bg-dark ou navbar-light bg-light*/}
       <nav
-        className={`navbar navbar-expand-sm navbar-light bg-light`}
+        className={`navbar navbar-expand-sm ${theme === "light" ? "navbar-light bg-light" : "navbar-dark bg-dark"}`}
         aria-label="Third navbar example"
       >
         <div className="container">
@@ -51,13 +53,13 @@ const Navbar = () => {
                 se sim, btn-dark, se não, btn-light */}
                 {token !== null ? (
                   <button
-                    className={`btn ${styles.darkModeButton}`}
+                    className={`nav-link ${styles.darkModeButton}`}
                     onClick={clearToken}
                   >
                     Logout
                   </button>
                 ) : (
-                  <Link to="/login">Login</Link>
+                  <Link className="nav-link" to="/login">Login</Link>
                  
                 )}
               </li>
@@ -67,8 +69,8 @@ const Navbar = () => {
                  Na linha seguinte deverá ser feito um teste se a aplicação
                  está em dark mode e deverá utilizar o icone ☀ ou 🌙 e btn-dark ou btn-light*/}
                 <button
-                  className={`btn btn-light${styles.btnStyle
-                    }`}
+                  className={`btn btn-light${styles.btnStyle}`}
+                  onClick={toggleTheme}
                 >
                   ☀ 🌙{" "}
                 </button>

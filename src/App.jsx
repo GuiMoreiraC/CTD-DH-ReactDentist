@@ -8,7 +8,7 @@ import { AuthProvider } from "./Context/AuthContext"; // Importe o AuthProvider
 
 function App() {
 
-  const {theme, toggleTheme} = useContext(ThemeContext)
+  const {theme} = useContext(ThemeContext)
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
@@ -22,7 +22,7 @@ function App() {
     <>
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
       // está em dark mode e deverá utilizar a classe dark ou light */}
-      <div className={`app light}`}>
+      <div className={`app ${theme == "light"? "light" : "dark"}`}>
         <AuthProvider>
           <Navbar />
           <main>

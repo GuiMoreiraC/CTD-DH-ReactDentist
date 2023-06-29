@@ -1,8 +1,9 @@
-import { useEffect,useState } from "react";
+import { useContext, useEffect,useState } from "react";
 import ScheduleFormModal from "./ScheduleFormModal";
 import styles from "./DetailCard.module.css";
 import axios from "axios";
 import { useParams,useNavigate } from 'react-router-dom';
+import { ThemeContext } from "../Context/ThemeContext";
 
 
 
@@ -11,6 +12,9 @@ const DetailCard = () => {
   const [username, setUsername] = useState("")
   const params = useParams();
   const dentistID = params.id;
+
+  //Contextos
+  const {theme} = useContext(ThemeContext);
 
   useEffect(() => {
     //Nesse useEffect, você vai fazer um fetch na api passando o 
@@ -31,7 +35,7 @@ const DetailCard = () => {
         {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
         <div
-          className={`card-body row`}
+          className={`card-body row ${theme == "light"? "" : styles.cardDark}`}
         >
           <div className="col-sm-12 col-lg-6">
             <img
@@ -56,8 +60,8 @@ const DetailCard = () => {
               <button
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                className={`btn btn-light ${styles.button
-                  }`}
+                className={`btn ${styles.button
+                  } ${theme == "light" ? "btn-light" : "btn-dark"}`}
               >
                 Marcar consulta
               </button>

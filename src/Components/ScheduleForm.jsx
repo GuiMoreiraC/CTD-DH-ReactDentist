@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import styles from "./ScheduleForm.module.css";
 import { ApiDataContext } from "../Context/ApiDataContext";
 import axios from "axios";
+import { ThemeContext } from "../Context/ThemeContext";
 
 import { AuthContext } from "../Context/AuthContext";
 
@@ -16,6 +17,7 @@ const ScheduleForm = () => {
   const [dentist, setDentist] = useState("");
 
   const {token} = useContext(AuthContext);
+  const {theme} = useContext(ThemeContext);
   
 
   function handleChangeSelectDentist(event) {
@@ -71,8 +73,7 @@ const ScheduleForm = () => {
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
       <div
-        className={`text-center container}`
-        }
+        className={`text-center container`}
       >
         <form onSubmit={handleSubmit}>
           <div className={`row ${styles.rowSpacing}`}>
@@ -127,8 +128,7 @@ const ScheduleForm = () => {
             {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
             <button
-              className={`btn btn-light ${styles.button
-                }`}
+              className={theme == "light" ? `btn btn-light` : `btn btn-dark`}
               type="submit"
             >
               Schedule

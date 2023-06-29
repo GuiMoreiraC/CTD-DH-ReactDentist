@@ -2,6 +2,10 @@
   font-size: 30px;
 }
 
+.navbarDark {
+  background-color: #313131;
+}
+
 .navbarBrand::first-letter {
   color: #f21d1d;
 }
