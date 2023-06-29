@@ -5,7 +5,7 @@ import axios from "axios";
 import { GlobalContext } from "../Context/GlobalContext";
 
 const ScheduleForm = () => {
-  const {apiData,token} = useContext(GlobalContext); //busca dados do contexto da API
+  const {apiData,token,theme} = useContext(GlobalContext); //busca dados do contexto da API
   const dentistList = apiData.dentistList; //define a variavel dentisList com a lista de dentistas obtida na consulta
   const pacientList = apiData.pacientList; //define a variavel pacientList com a lista de pacientes obtida na consulta
 
@@ -66,8 +66,7 @@ const ScheduleForm = () => {
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
       <div
-        className={`text-center container}`
-        }
+        className={`text-center container`}
       >
         <form onSubmit={handleSubmit}>
           <div className={`row ${styles.rowSpacing}`}>
@@ -122,8 +121,7 @@ const ScheduleForm = () => {
             {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
             <button
-              className={`btn btn-light ${styles.button
-                }`}
+              className={theme == "light" ? `btn btn-light` : `btn btn-dark`}
               type="submit"
             >
               Schedule
