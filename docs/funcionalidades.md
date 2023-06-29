@@ -25,7 +25,7 @@ Deverá ser criado um contexto global em seu aplicativo que disponibilize as seg
 * Informação trazida pela API (você pode usar fetch ou axios para fazer a chamada)
 * Para gerenciar e atualizar o estado global, você deve implementar o hook useReducer. Com esse hook é necessário implementar a mudança do tema de cores (com um botão no app específico para isso dentro da Navbar), de claro para escuro e vice-versa, salvar o token de autenticação no localstorage e retorna-lo.
 
-### Criação de rotas
+### Criação de rotas (OK)
 Usando o React Router você deve criar os seguintes endereços descritos em [routes](#rotas)
 
 ### Estilos
