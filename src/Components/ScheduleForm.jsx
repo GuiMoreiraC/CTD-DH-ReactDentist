@@ -1,7 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./ScheduleForm.module.css";
-import { ApiDataContext } from "../Components/ApiDataContext";
+import { ApiDataContext } from "../Context/ApiDataContext";
 import axios from "axios";
+
+import { AuthContext } from "../Context/AuthContext";
 
 const ScheduleForm = () => {
   const apiData = useContext(ApiDataContext); //busca dados do contexto da API
@@ -13,6 +15,9 @@ const ScheduleForm = () => {
   const [pacient, setPacient] = useState("");
   const [dentist, setDentist] = useState("");
 
+  const {token} = useContext(AuthContext);
+  
+
   function handleChangeSelectDentist(event) {
     setDentist(event.target.value); //define o valor do estado com a matricula do dentista selecionado no select
   }
@@ -22,8 +27,7 @@ const ScheduleForm = () => {
   function handleDateSelect(event) {
     const selectedDate = event.target.value;
     if(selectedDate!==""){
-    setAppointmentDate(selectedDate);
-    console.log(selectedDate);}
+    setAppointmentDate(selectedDate);}
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -42,13 +46,16 @@ const ScheduleForm = () => {
         },
         {
           headers: {
-            // Authorization: `Bearer ${token}`
+             Authorization: `Bearer ${token}`
           }
         }
+        
       );
+      console.log(response);
     } catch (e) {
       console.log(e);
     }
+    console.log(token);
     // console.log(dentist);
     // console.log(pacient);
     // console.log(appointmentDate);

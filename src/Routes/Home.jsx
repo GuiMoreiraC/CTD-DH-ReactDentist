@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import Card from "../Components/Card";
-import { ApiDataContext } from "../Components/ApiDataContext";
+import { ApiDataContext } from "../Context/ApiDataContext";
 
 const Home = () => {
 
