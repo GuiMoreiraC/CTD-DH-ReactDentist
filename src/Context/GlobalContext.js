@@ -9,11 +9,6 @@ const initialState = {
 
 const GlobalContext = createContext(initialState);
 
-
-
-
-
-
 const authReducer = (state, action) => {
     switch (action.type) {
         case 'SET_TOKEN':
@@ -25,18 +20,17 @@ const authReducer = (state, action) => {
     }
 };
 
-
-
-
 const GlobalProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
-    const setToken = (token) => {
+    const setToken = token => {
         dispatch({ type: 'SET_TOKEN', payload: token });
+        localStorage.setItem('token', token);
     };
 
     const clearToken = () => {
         dispatch({ type: 'CLEAR_TOKEN' });
+        localStorage.removeItem('token');
     };
     //-------------------------------------------------------------------------------------------
 
@@ -46,11 +40,15 @@ const GlobalProvider = ({ children }) => {
         const fetchData = async () => {
             try {
                 // Buscar dentistas na API
-                const response1 = await axios.get("https://dhodonto.ctdprojetointegrador.com/dentista");
+                const response1 = await axios.get(
+                    'https://dhodonto.ctdprojetointegrador.com/dentista'
+                );
                 const dentistList = response1.data;
 
                 // Busca pacientes
-                const response2 = await axios.get("https://dhodonto.ctdprojetointegrador.com/paciente");
+                const response2 = await axios.get(
+                    'https://dhodonto.ctdprojetointegrador.com/paciente'
+                );
                 const pacientList = response2.data.body;
 
                 // Combina os resultados em um único objeto, para que possa ser possível exportar ambos como globais
@@ -69,15 +67,17 @@ const GlobalProvider = ({ children }) => {
     }, []);
     //---------------------------------------------------------------------------------------------------
 
-    const [theme, setTheme] = useState("light");
+    const [theme, setTheme] = useState('light');
 
     const toggleTheme = () => {
-        setTheme(theme === "light" ? "dark" : "light");
-    }
+        setTheme(theme === 'light' ? 'dark' : 'light');
+    };
     //-------------------------------------------------------------
 
     return (
-        <GlobalContext.Provider value={{ token: state.token, setToken, clearToken, apiData,theme, toggleTheme }}>
+        <GlobalContext.Provider
+            value={{ token: state.token, setToken, clearToken, apiData, theme, toggleTheme }}
+        >
             {children}
         </GlobalContext.Provider>
     );

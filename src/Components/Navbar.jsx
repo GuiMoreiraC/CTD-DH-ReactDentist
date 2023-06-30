@@ -4,8 +4,7 @@ import { Link,useNavigate } from "react-router-dom";
 import { GlobalContext } from "../Context/GlobalContext";
 
 const Navbar = () => {
-  const { token, clearToken, setToken,theme,toggleTheme } = useContext(GlobalContext);
-  const tokenStorage = localStorage.getItem("token");
+  const { token, clearToken, theme, toggleTheme } = useContext(GlobalContext);
   const navigate = useNavigate();
   return (
     <header className="sticky-top ">
@@ -48,17 +47,11 @@ const Navbar = () => {
                 ao formulário de login
                 O botão de logout deverá ser testado darkmode
                 se sim, btn-dark, se não, btn-light */}
-                {tokenStorage !== null ? (
-                  <button
-                    className={`btn ${styles.darkModeButton}`}
-                    onClick={() => {
-                      clearToken();
-                      localStorage.removeItem("token");
-                      navigate("/home");
-                    }}
-                  >
-                    Logout
-                  </button>
+                {token !== null ? (
+                  <span onClick={() => clearToken()}>
+                    <Link to="/login">Logout</Link>
+                  </span>
+                  
                 ) : (
                   <Link to="/login">Login</Link>
 
