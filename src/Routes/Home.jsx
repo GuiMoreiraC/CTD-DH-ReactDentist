@@ -1,11 +1,23 @@
-import { useContext } from "react";
 import Card from "../Components/Card";
-import { GlobalContext } from "../Context/GlobalContext";
-const Home = () => {
 
-  const {apiData} = useContext(GlobalContext); //busca dados do contexto da API
+import { useContext, useEffect } from "react";
+import { GlobalContext } from "../Context/GlobalContext";
+import { useNavigate } from "react-router-dom";
+
+const Home = () => {
+  const navigate = useNavigate();
+  const {apiData, token} = useContext(GlobalContext); //busca dados do contexto da API
   const dentistList = apiData.dentistList; //define a variavel dentisList com a lista de dentistas obtida na consulta
+
+  // const tokenHistory =localStorage.getItem('token')
  
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+    
+  }, [token, navigate]);
+
   return (
     <>
       <h1>Home</h1>
