@@ -32,6 +32,14 @@ const GlobalProvider = ({ children }) => {
         dispatch({ type: 'CLEAR_TOKEN' });
         localStorage.removeItem('token');
     };
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) {
+            dispatch({ type: 'SET_TOKEN', payload: storedToken });
+        }
+    }, []);
+
     //-------------------------------------------------------------------------------------------
 
     const [apiData, setApiData] = useState([]);
