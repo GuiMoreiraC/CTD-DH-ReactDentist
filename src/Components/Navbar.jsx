@@ -4,9 +4,9 @@ import { Link,useNavigate } from "react-router-dom";
 import { GlobalContext } from "../Context/GlobalContext";
 
 const Navbar = () => {
-  const { token, clearToken, setToken,theme,toggleTheme } = useContext(GlobalContext);
-  const tokenStorage = localStorage.getItem("token");
+  const { token, clearToken, theme, toggleTheme } = useContext(GlobalContext);
   const navigate = useNavigate();
+  const tokenStorage = localStorage.getItem("token")
   return (
     <header className="sticky-top ">
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação

@@ -16,7 +16,7 @@ const LoginForm = () => {
     if (data && !error) {
       // Salvar o token no usando a Context API
       setToken(data.token);
-      localStorage.setItem("token",data.token);
+      localStorage.setItem("token", data.token);
       alert("Login realizado com sucesso!");
       /// Redirecionamos o usuário para a Home
       navigate("/home");
@@ -25,14 +25,14 @@ const LoginForm = () => {
 
     // Mostrar erro de login
     if (error) {
-      error.response.status == 400 
-        ? setErrorMessage("Credenciais inválidas")
+      error.response.status == 400
+        ? setErrorMessage("Verifique suas informações novamente. Credenciais inválidas")
         : setErrorMessage("Ocorreu um erro. Tente novamente mais tarde.");
 
     }
 
   }, [data, error, navigate]);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -43,19 +43,16 @@ const LoginForm = () => {
     // Verificar se todos os campos obrigatórios foram preenchidos
     if (!login || !password) {
       !login
-        ? setErrorMessage("O campo de login é obrigatório")
-        : setErrorMessage("O campo de Senha é obrigatório");
+        ? setErrorMessage("Verifique suas informações novamente. O campo de login é obrigatório")
+        : setErrorMessage("Verifique suas informações novamente. O campo de Senha é obrigatório");
       return;
 
     }
 
     // Validar comprimento do campo de login
-    if (login.length <= 5 || password.length <=7) {
-      login.length <= 5
-        ? setErrorMessage("O campo de login deve ter comprimento maior que 5")
-        : setErrorMessage("O campo de Senha deve ter no minimo 8 caracteres");
+    if (login.length <= 5 || password.length <= 7) {
+      setErrorMessage("Verifique suas informações novamente.")
       return;
-
     }
 
     // Enviar os dados do formulário para a rota da API que faz o login (/auth)
