@@ -50,17 +50,25 @@ const Navbar = () => {
                 se sim, btn-dark, se não, btn-light */}
                 {tokenStorage !== null ? (
                   <button
-                    className={`btn ${styles.darkModeButton}`}
+                    className={`btn ${styles.darkModeButton} ${theme=="light"?"btn-light":"btn-dark"}`}
                     onClick={() => {
                       clearToken();
                       localStorage.removeItem("token");
                       navigate("/home");
+                      alert("Logoff realizado com sucesso!")
                     }}
                   >
                     Logout
                   </button>
                 ) : (
-                  <Link to="/login">Login</Link>
+                  <button
+                    className={`btn ${styles.darkModeButton} btn-light`}
+                    onClick={() => {
+                      navigate("/Login")
+                    }}
+                  >
+                    Login
+                  </button>
 
                 )}
               </li>
@@ -70,10 +78,10 @@ const Navbar = () => {
                  Na linha seguinte deverá ser feito um teste se a aplicação
                  está em dark mode e deverá utilizar o icone ☀ ou 🌙 e btn-dark ou btn-light*/}
                 <button
-                  className={`btn btn-light${styles.btnStyle}`}
+                  className={`btn ${theme!="light"?"btn-light":"btn-dark"} ${styles.btnStyle}`}
                   onClick={toggleTheme}
                 >
-                  ☀ 🌙{" "}
+                  {theme!="light"?"☀":"🌙"}
                 </button>
               </li>
             </ul>

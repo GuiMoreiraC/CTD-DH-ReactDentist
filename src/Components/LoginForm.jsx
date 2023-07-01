@@ -17,7 +17,7 @@ const LoginForm = () => {
       // Salvar o token no usando a Context API
       setToken(data.token);
       localStorage.setItem("token",data.token);
-      alert("LOgou com sucess@@")
+      alert("Login realizado com sucesso!");
       /// Redirecionamos o usuário para a Home
       navigate("/home");
 

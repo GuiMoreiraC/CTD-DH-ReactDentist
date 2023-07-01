@@ -9,11 +9,6 @@ const initialState = {
 
 const GlobalContext = createContext(initialState);
 
-
-
-
-
-
 const authReducer = (state, action) => {
     switch (action.type) {
         case 'SET_TOKEN':
@@ -24,8 +19,6 @@ const authReducer = (state, action) => {
             return state;
     }
 };
-
-
 
 
 const GlobalProvider = ({ children }) => {
@@ -75,6 +68,8 @@ const GlobalProvider = ({ children }) => {
         setTheme(theme === "light" ? "dark" : "light");
     }
     //-------------------------------------------------------------
+
+   
 
     return (
         <GlobalContext.Provider value={{ token: state.token, setToken, clearToken, apiData,theme, toggleTheme }}>

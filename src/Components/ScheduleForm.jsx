@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./ScheduleForm.module.css";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../Context/GlobalContext";
+import { Alert } from "bootstrap";
 
 const ScheduleForm = () => {
-  const {apiData,token,theme} = useContext(GlobalContext); //busca dados do contexto da API
+  const { apiData, theme } = useContext(GlobalContext); //busca dados do contexto da API
   const dentistList = apiData.dentistList; //define a variavel dentisList com a lista de dentistas obtida na consulta
   const pacientList = apiData.pacientList; //define a variavel pacientList com a lista de pacientes obtida na consulta
 
@@ -13,8 +14,8 @@ const ScheduleForm = () => {
 
   const [pacient, setPacient] = useState("");
   const [dentist, setDentist] = useState("");
-
-  
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   function handleChangeSelectDentist(event) {
     setDentist(event.target.value); //define o valor do estado com a matricula do dentista selecionado no select
@@ -24,8 +25,9 @@ const ScheduleForm = () => {
   }
   function handleDateSelect(event) {
     const selectedDate = event.target.value;
-    if(selectedDate!==""){
-    setAppointmentDate(selectedDate);}
+    if (selectedDate !== "") {
+      setAppointmentDate(selectedDate);
+    }
   }
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -44,16 +46,21 @@ const ScheduleForm = () => {
         },
         {
           headers: {
-             Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`
           }
         }
-        
       );
       console.log(response);
+      if (response.status === 200) {
+        alert("Consulta agendada com sucesso")
+        window.location.href = "/home";
+      }
     } catch (e) {
       console.log(e);
+      const msg = e.response ? e.response.data : 'Ocorreu um erro durante o agendamento da consulta';
+      alert(msg);
     }
-    
+ 
     //Nesse handlesubmit você deverá usar o preventDefault,
     //obter os dados do formulário e enviá-los no corpo da requisição 
     //para a rota da api que marca a consulta
@@ -123,6 +130,7 @@ const ScheduleForm = () => {
             <button
               className={theme == "light" ? `btn btn-light` : `btn btn-dark`}
               type="submit"
+            //data-bs-dismiss="modal"
             >
               Schedule
             </button>

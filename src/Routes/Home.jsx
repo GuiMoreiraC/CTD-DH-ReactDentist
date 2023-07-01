@@ -15,6 +15,7 @@ const Home = () => {
           <Card
             name={dentist.nome + " " + dentist.sobrenome}
             matricula={dentist.matricula}
+            user={dentist.usuario.username}
             key={dentist.matricula}
           />
         ))}

@@ -5,7 +5,7 @@ import { GlobalContext } from "../Context/GlobalContext";
 
 
 
-const Card = ({name,matricula}) => {
+const Card = ({name,matricula,user}) => {
   const {theme} = useContext(GlobalContext);
   
   return (
@@ -21,6 +21,7 @@ const Card = ({name,matricula}) => {
         <div className={`card-body ${styles.CardBody}`}>
           <Link to={`/dentist/${matricula}`}>
             <h5 className={`card-title ${styles.title}`}>{name}</h5>
+            <h7 className={`${styles.title}`}>{user}</h7>
           </Link>
         </div>
       </div>
