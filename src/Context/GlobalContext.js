@@ -75,11 +75,20 @@ const GlobalProvider = ({ children }) => {
     }, []);
     //---------------------------------------------------------------------------------------------------
 
-    const [theme, setTheme] = useState('light');
+    const [theme, setTheme] = useState(localStorage.getItem("theme") === null ? "light" : localStorage.getItem("theme"));
 
     const toggleTheme = () => {
-        setTheme(theme === 'light' ? 'dark' : 'light');
+        setTheme(theme === "light" ? "dark" : "light");
+        if (theme == "light") {
+            localStorage.setItem("theme", "light")            
+        } else {
+            localStorage.setItem("theme", "dark")
+        }
     };
+
+    useEffect(() => {
+            localStorage.setItem("theme", theme)
+      },[theme])
     //-------------------------------------------------------------
 
    

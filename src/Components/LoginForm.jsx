@@ -8,7 +8,7 @@ import useApi from "../Hooks/useApi";
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const { setToken } = useContext(GlobalContext);
+  const { theme, setToken } = useContext(GlobalContext);
   const [errorMessage, setErrorMessage] = useState("");
   const { data, error, shouldFetch } = useApi();
 
@@ -66,7 +66,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <div className={`text-center card container ${styles.card}`}>
+      <div className={`text-center card container ${styles.card} ${theme === "light" ? "light" : "dark"}`}>
         <div className={`card-body ${styles.CardBody}`}>
           <form onSubmit={handleSubmit} noValidate>
             <input

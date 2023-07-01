@@ -23,3 +23,24 @@
   width: 3rem;
   height: 3rem;
 }
+
+.lightButton,
+.darkButton {
+  font-weight: 700;
+}
+
+.lightButton {
+  color:#797979
+}
+
+.lightButton:hover {
+  color:#535353
+}
+
+.darkButton {
+  color:#999999
+}
+
+.darkButton:hover {
+  color:#bdbdbd
+}

@@ -39,7 +39,7 @@ const Navbar = () => {
             <ul className="navbar-nav mb-2 mb-sm-0">
               <li className={`nav-item ${styles.navBarLink}`}>
                 {/* Ao clicar, o usuário deve ser redirecionado a home, com react-router */}
-                <Link to="/home">Home</Link>
+                <Link to="/home" className={theme === "light" ? styles.lightButton : styles.darkButton}>Home</Link>
               </li>
               <li className={`nav-item ${styles.navBarLink}`}>
                 {/* Se o usuário estiver logado, deverá aparecer um botão de logout
@@ -49,27 +49,22 @@ const Navbar = () => {
                 O botão de logout deverá ser testado darkmode
                 se sim, btn-dark, se não, btn-light */}
                 {tokenStorage !== null ? (
-                  <button
-                    className={`btn ${styles.darkModeButton} ${theme=="light"?"btn-light":"btn-dark"}`}
-                    onClick={() => {
-                      clearToken();
-                      localStorage.removeItem("token");
-                      navigate("/home");
-                      alert("Logoff realizado com sucesso!")
-                    }}
-                  >
-                    Logout
-                  </button>
+                  <Link to="/login" 
+                  className={`btn ${theme === "light" ? styles.lightButton : styles.darkButton}`}
+                  onClick={() => {
+                        clearToken();
+                        localStorage.removeItem("token");
+                        navigate("/login");
+                        alert("Logoff realizado com sucesso!")
+                      }}>
+                  Logout</Link>
                 ) : (
-                  <button
-                    className={`btn ${styles.darkModeButton} btn-light`}
-                    onClick={() => {
-                      navigate("/Login")
-                    }}
-                  >
-                    Login
-                  </button>
-
+                  <Link to="/login" 
+                  className={`btn ${theme === "light" ? styles.lightButton : styles.darkButton}`}
+                  onClick={() => {
+                        navigate("/login");
+                      }}>
+                  Login</Link>
                 )}
               </li>
               <li className={`nav-item`}>

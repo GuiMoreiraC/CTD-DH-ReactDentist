@@ -19,9 +19,9 @@ const Card = ({name,matricula,user}) => {
           alt="doctor placeholder"
         />
         <div className={`card-body ${styles.CardBody}`}>
-          <Link to={`/dentist/${matricula}`}>
-            <h5 className={`card-title ${styles.title}`}>{name}</h5>
-            <h7 className={`${styles.title}`}>{user}</h7>
+          <Link to={`/dentist/${matricula}`} className={theme === "light" ? "light" : "dark"}>
+            <p className={`card-title ${styles.title}`}>{name}</p>
+            <p>{user}</p>
           </Link>
         </div>
       </div>

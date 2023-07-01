@@ -27,7 +27,7 @@ const DetailCard = () => {
     //substituídas com as informações que vem da api
     <>
       <h1>Detail about Dentist {dentist.nome+" "+dentist.sobrenome} </h1>
-      <section className="card col-sm-12 col-lg-6 container">
+      <section className={`card col-sm-12 col-lg-6 container ${theme == "light"? "" : styles.cardDark}`}>
         {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
         <div

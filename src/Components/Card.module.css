@@ -1,5 +1,6 @@
 .cardDark{
   background-color: #31313196;
+  border: 1px solid black;
 }
 
 .card:hover{
@@ -20,4 +21,6 @@
 
 .title{
   height: 2rem;
+  font-size: 25px;
+  font-weight: 600;
 }
