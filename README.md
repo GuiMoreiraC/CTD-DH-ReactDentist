@@ -1,6 +1,4 @@
-# ctd-fe3-template
-
-Exame Final de Frontend III
+# Exame Final de Frontend III
 
 ## Índice
 * [Requisitos](#requisitos)
