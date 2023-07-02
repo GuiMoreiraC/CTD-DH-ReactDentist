@@ -25,13 +25,13 @@ const LoginForm = () => {
 
     // Mostrar erro de login
     if (error) {
-      error.response.status == 400
+      error.response.status === 400
         ? setErrorMessage("Verifique suas informações novamente. Credenciais inválidas")
-        : setErrorMessage("Ocorreu um erro. Tente novamente mais tarde.");
+        : setErrorMessage("Ocorreu um erro. Verifique ou tente novamente mais tarde.");
 
     }
 
-  }, [data, error, navigate]);
+  }, [data, error, navigate, setToken]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,8 +43,8 @@ const LoginForm = () => {
     // Verificar se todos os campos obrigatórios foram preenchidos
     if (!login || !password) {
       !login
-        ? setErrorMessage("Verifique suas informações novamente. O campo de login é obrigatório")
-        : setErrorMessage("Verifique suas informações novamente. O campo de Senha é obrigatório");
+        ? setErrorMessage("Verifique suas informações novamente.")
+        : setErrorMessage("Verifique suas informações novamente.");
       return;
 
     }
@@ -70,12 +70,14 @@ const LoginForm = () => {
         <div className={`card-body ${styles.CardBody}`}>
           <form onSubmit={handleSubmit} noValidate>
             <input
+              data-testid="login"
               className={`form-control ${styles.inputSpacing}`}
               placeholder="Login"
               name="login"
               required
             />
             <input
+              data-testid="password"
               className={`form-control ${styles.inputSpacing}`}
               placeholder="Password"
               name="password"
@@ -87,7 +89,7 @@ const LoginForm = () => {
             </button>
           </form>
           {errorMessage && (
-            <div className="alert alert-danger mt-3" role="alert">
+            <div className="alert alert-danger mt-3" role="alert" data-testid="alert">
               {errorMessage}
             </div>
           )}

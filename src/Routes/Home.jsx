@@ -20,7 +20,7 @@ const Home = () => {
 
   return (
     <>
-      <h1>Home</h1>
+      <h1 data-testid="homeTitle">Home</h1>
       <div className="card-grid container">
         {dentistList && dentistList.map((dentist) => (  // Verifica se dentistList existe, evitando erro do map executar com a lista vazia
   

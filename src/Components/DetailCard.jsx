@@ -2,7 +2,7 @@ import { useEffect,useState,useContext } from "react";
 import ScheduleFormModal from "./ScheduleFormModal";
 import styles from "./DetailCard.module.css";
 import axios from "axios";
-import { useParams,useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { GlobalContext } from "../Context/GlobalContext";
 
 const DetailCard = () => {
@@ -16,7 +16,8 @@ const DetailCard = () => {
     //Nesse useEffect, você vai fazer um fetch na api passando o 
     //id do dentista que está vindo do react-router e carregar os dados em algum estado
     getdDentist();
-  }, []);
+  },[]);
+
   async function getdDentist(id){
     const response = await axios.get(`https://dhodonto.ctdprojetointegrador.com/dentista?matricula=${dentistID}`)
     setDentist(response.data);
@@ -27,11 +28,11 @@ const DetailCard = () => {
     //substituídas com as informações que vem da api
     <>
       <h1>Detail about Dentist {dentist.nome+" "+dentist.sobrenome} </h1>
-      <section className={`card col-sm-12 col-lg-6 container ${theme == "light"? "" : styles.cardDark}`}>
+      <section className={`card col-sm-12 col-lg-6 container ${theme === "light"? "" : styles.cardDark}`}>
         {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
         <div
-          className={`card-body row ${theme == "light"? "" : styles.cardDark}`}
+          className={`card-body row ${theme === "light"? "" : styles.cardDark}`}
         >
           <div className="col-sm-12 col-lg-6">
             <img
@@ -61,7 +62,7 @@ const DetailCard = () => {
                 disabled={token!==null?false:true}
                 data-bs-target="#exampleModal"
                 className={`btn ${styles.button
-                  } ${theme == "light" ? "btn-light" : "btn-dark"}`}
+                  } ${theme === "light" ? "btn-light" : "btn-dark"}`}
               >
                 Marcar consulta
               </button>

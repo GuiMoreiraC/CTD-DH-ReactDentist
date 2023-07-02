@@ -1,9 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./ScheduleForm.module.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../Context/GlobalContext";
-import { Alert } from "bootstrap";
 
 const ScheduleForm = () => {
   const { apiData, theme } = useContext(GlobalContext); //busca dados do contexto da API
@@ -15,7 +13,6 @@ const ScheduleForm = () => {
   const [pacient, setPacient] = useState("");
   const [dentist, setDentist] = useState("");
   const token = localStorage.getItem("token");
-  const navigate = useNavigate();
 
   function handleChangeSelectDentist(event) {
     setDentist(event.target.value); //define o valor do estado com a matricula do dentista selecionado no select
@@ -82,6 +79,7 @@ const ScheduleForm = () => {
                 Dentist
               </label>
               <select className="form-select" name="dentist" id="dentist" onChange={handleChangeSelectDentist}>
+                <option>-- Selecione --</option>
                 {/*Aqui deve ser feito um map para listar todos os dentistas*/}
                 {dentistList && dentistList.map((dentist) => {
                   return (
@@ -98,6 +96,7 @@ const ScheduleForm = () => {
                 Patient
               </label>
               <select className="form-select" name="patient" id="patient" onChange={handleChangeSelectPacient}>
+                <option>-- Selecione --</option>
                 {/*Aqui deve ser feito um map para listar todos os pacientes*/}
                 {pacientList && pacientList.map((pacient) => {
                   return (
@@ -128,7 +127,7 @@ const ScheduleForm = () => {
             {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
             <button
-              className={theme == "light" ? `btn btn-light` : `btn btn-dark`}
+              className={theme === "light" ? `btn btn-light` : `btn btn-dark`}
               type="submit"
             //data-bs-dismiss="modal"
             >

@@ -1,7 +1,6 @@
 import LoginForm from "../Components/LoginForm";
 
-import { useContext, useEffect } from "react";
-import { GlobalContext } from "../Context/GlobalContext";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {

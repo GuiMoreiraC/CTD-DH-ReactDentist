@@ -79,7 +79,7 @@ const GlobalProvider = ({ children }) => {
 
     const toggleTheme = () => {
         setTheme(theme === "light" ? "dark" : "light");
-        if (theme == "light") {
+        if (theme === "light") {
             localStorage.setItem("theme", "light")            
         } else {
             localStorage.setItem("theme", "dark")

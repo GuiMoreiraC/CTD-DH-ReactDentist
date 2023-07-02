@@ -1,18 +1,18 @@
 import { render } from "@testing-library/react"
 import { BrowserRouter, MemoryRouter, Routes, Route } from "react-router-dom"
-import { ContextProvider } from "../Components/utils/global.context"
+import { GlobalProvider } from "../Context/GlobalContext"
 import Home from "../Routes/Home"
 import Detail from "../Routes/Detail"
 import Login from "../Routes/Login"
 import App from "../App"
 
 
-const renderWithContext = (ui, providerValue)=>{
+const renderWithContext = (ui)=>{
     return render(
         <BrowserRouter>
-            <ContextProvider value={providerValue || {theme: "light", data: []}} >   
+            <GlobalProvider>   
                 {ui}
-            </ContextProvider>
+            </GlobalProvider>
         </BrowserRouter>
     )
 }

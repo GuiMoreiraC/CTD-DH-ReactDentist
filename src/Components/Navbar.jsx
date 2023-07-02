@@ -4,7 +4,7 @@ import { Link,useNavigate } from "react-router-dom";
 import { GlobalContext } from "../Context/GlobalContext";
 
 const Navbar = () => {
-  const { token, clearToken, theme, toggleTheme } = useContext(GlobalContext);
+  const { clearToken, theme, toggleTheme } = useContext(GlobalContext);
   const navigate = useNavigate();
   const tokenStorage = localStorage.getItem("token")
   return (
@@ -73,10 +73,11 @@ const Navbar = () => {
                  Na linha seguinte deverá ser feito um teste se a aplicação
                  está em dark mode e deverá utilizar o icone ☀ ou 🌙 e btn-dark ou btn-light*/}
                 <button
-                  className={`btn ${theme!="light"?"btn-light":"btn-dark"} ${styles.btnStyle}`}
+                  data-testid="themeButton"
+                  className={`btn ${theme!=="light"?"btn-light":"btn-dark"} ${styles.btnStyle}`}
                   onClick={toggleTheme}
                 >
-                  {theme!="light"?"☀":"🌙"}
+                  {theme!=="light"?"☀":"🌙"}
                 </button>
               </li>
             </ul>
